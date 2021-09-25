@@ -34,35 +34,35 @@ stages:
         artifact: 'manifests'
         publishLocation: 'pipeline'
         
-- stage: Deploy
-  displayName: Deploy to Dev
-  dependsOn: Build
-  variables:
-    acrsecret: nc1acrauth
-    acrdevurl: 'nc1acr.azurecr.io'
-    replicaNo: 3
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy to AKS
-    environment: 'k8sdev.default'
-    pool: 
-      vmImage: ubuntu-latest
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: 'manifests'
-              targetPath: '$(Pipeline.Workspace)/manifests'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'createSecret'
-              namespace: 'default'
-              secretType: 'dockerRegistry'
-              secretName: '$(acrsecret)'
-              dockerRegistryEndpoint: 'nc1acr'
+# - stage: Deploy
+#   displayName: Deploy to Dev
+#   dependsOn: Build
+#   variables:
+#     acrsecret: nc1acrauth
+#     acrdevurl: 'nc1acr.azurecr.io'
+#     replicaNo: 3
+#   jobs:
+#   - deployment: Deploy
+#     displayName: Deploy to AKS
+#     environment: 'k8sdev.default'
+#     pool: 
+#       vmImage: ubuntu-latest
+#     strategy:
+#       runOnce:
+#         deploy:
+          # steps:
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     buildType: 'current'
+          #     artifactName: 'manifests'
+          #     targetPath: '$(Pipeline.Workspace)/manifests'
+          # - task: KubernetesManifest@0
+          #   inputs:
+          #     action: 'createSecret'
+          #     namespace: 'default'
+          #     secretType: 'dockerRegistry'
+          #     secretName: '$(acrsecret)'
+          #     dockerRegistryEndpoint: 'nc1acr'
           # - task: replacetokens@3
           #   displayName: Replace Tokens
           #   inputs:
