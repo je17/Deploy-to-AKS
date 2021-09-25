@@ -40,7 +40,7 @@ stages:
   variables:
     acrsecret: nc1acrauth
     acrdevurl: 'nc1acr.azurecr.io'
-    replicaNo: 3
+    replicaNo: 1
   jobs:
   - deployment: Deploy
     displayName: Deploy to AKS
